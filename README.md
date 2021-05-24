@@ -20,9 +20,10 @@
 
 ##Usage
 
-	Run the SNP_metadata_extractor.py script to create plink metadata. After all desired metadata is present run the snp_clustering.py script.
-	You will be prompted for entering the chromosome number and clustering algorithm you wish to perform. The script computes files called like "chr1_snplist.snplist" and "chr1.ld". 
-	These files are created by SNP_metadata_extractor.py
+	Run the SNP_metadata_extractor.py script to create plink metadata. After all desired metadata is 
+	present run the snp_clustering.py script. You will be prompted for entering the chromosome number 
+	and clustering algorithm you wish to perform. The script computes files called like "chr1_snplist.snplist" 
+	and "chr1.ld". These files are created by SNP_metadata_extractor.py
 
 ##WARNING
 
