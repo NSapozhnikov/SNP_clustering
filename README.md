@@ -27,4 +27,5 @@
 
 ##WARNING
 
-	This script is under development. Method parameters need to be tweaked for more precise results. Please report any bugs to shushulba.rol@gmail.com
+	This script is under development. Method parameters need to be tweaked for more precise results. 
+	Please report any bugs to shushulba.rol@gmail.com
