@@ -1,5 +1,5 @@
-##SNP_clustering v0.2 
-##24.05.2021
+##SNP_clustering v0.3 
+##29.05.2021
 
 #SNP_clustering
 
@@ -24,6 +24,11 @@
 	present run the snp_clustering.py script. You will be prompted for entering the chromosome number 
 	and clustering algorithm you wish to perform. The script computes files called like "chr1_snplist.snplist" 
 	and "chr1.ld". These files are created by SNP_metadata_extractor.py
+	
+##Update
+
+	Added out file creation
+	Changed argument entry to bash
 
 ##WARNING
 
