@@ -1,4 +1,4 @@
-# snp_clustering v0.3
+# snp_clustering v0.4
 # Please check README.txt
 
 import numpy as np
@@ -24,10 +24,10 @@ def hierarchy_clustering(diss_matrix_triangled, matrix_file_path):
     hierarchy = linkage(diss_matrix_triangled, method='single')
     print('\nOutput matrix is: ')
     print(hierarchy)
-    # hierarchy.set_link_color_palette()
-    print('\nPlotting a dendrogramm...')
-    dendrogram(hierarchy)
-    plt.show()
+    # # hierarchy.set_link_color_palette()
+    # print('\nPlotting a dendrogramm...')
+    # dendrogram(hierarchy)
+    # plt.show()
 # hierarchy_clustering()
 
 def dbscan_clustering(diss_matrix, snp_list, matrix_file_path):
@@ -159,97 +159,69 @@ def spectral_clustering(corr_matrix, snp_list, matrix_file_path):
 def awaiting_input():
     try:
         matrix_file_path = str(sys.argv[1])
+        f = open(matrix_file_path, 'r')            
     except (IndexError, FileNotFoundError, ValueError ):
-        print('Invalid matrix file path.')
+        sys.exit('Invalid matrix file path.')
     try:
         snp_file_path = str(sys.argv[2])
+        f = open(snp_file_path, 'r')
     except (IndexError, FileNotFoundError, ValueError ):
-        print('Invalid SNP list file path.')
-    
-    try:
-        while True:
-            try:
-                typed_chr = int(sys.argv[3])
-                #int(input("Type in the chromosome number: "))
-            except ValueError:
-                print("Invalid input.")
-                continue
-            if typed_chr not in range(23):
-                print("Must be in range [1; 22]")
-                continue
-            elif typed_chr == 0:
-                print("Must be in range [1; 22]")
-                continue
-            else:
-                break
-    except IndexError:
-        print('Invalid chromosome number.')
+        sys.exit('Invalid SNP list file path.')    
     try:
         methods = ['hierarchy_clustering', 'dbscan_clustering', 'affinity_propagation_clustering',
                'hdbscan_clustering', 'k_means_clustering', 'k_medoids_clustering', 'spectral_clustering']
-        # print('Available methods: ')
-        # for mtd in methods:
-        #     print(mtd)
-        while True:
-            result = 'NOT OK'
-            i = 0
-            typed_input = sys.argv[4].lower().replace('-', '_')
-            #input('Type in the clustering method: ').lower().strip().replace(' ', '_').replace('-', '_')
-            for met in methods:
-                if typed_input not in met:
-                    i+=1                
-                elif typed_input == '':
-                    i+=7         
-                else:
-                    print(f"\n{met} algorithm will be used...")
-                    time_start = datetime.datetime.now()
-                    print (f"\nTime of start - {time_start.isoformat(sep=' ', timespec='seconds')}")    
-                    try:
-                        with open (snp_file_path, 'r') as snp_file:
-                        #(f"chr{typed_chr}_snplist.snplist", 'r') 
-                            print('\nExtracting SNP list data from file...')
-                            snp_list = np.loadtxt(snp_file, dtype=str)
-                    except FileNotFoundError:
-                        print('No such file.')
-                        awaiting_input()
-                    try:
-                        with open(matrix_file_path, 'r') as corr_file:
-                        #(f"chr{typed_chr}.ld", 'r') 
-                            print('Extracting matrix data from file...')
-                            corr = np.fromfile(corr_file, sep=' ')
-                    except FileNotFoundError:
-                        print('No such file.')
-                        awaiting_input() 
-                    print('Reshaping an array...')
-                    corr_matrix = corr.reshape(len(snp_list), len(snp_list))
-                    dissimilarity = 1 - abs(corr)
-                    diss_matrix = dissimilarity.reshape(len(snp_list), len(snp_list))
-                    diss_matrix_triangled = squareform(diss_matrix, force='tovector')
-                  # diss_matrix = pairwise_distances(corr_matrix)    
-                    print(f"The SNP list for this chromosome is: \n{snp_list}")
-                    print(f"With length of: {len(snp_list)}")
-                    result = 'OK'
-            if i > 6:
-                print('Invalid method.')
-            if result == 'OK':
-                if typed_input in 'hierarchy_clustering':
-                    hierarchy_clustering(diss_matrix_triangled, matrix_file_path)
-                elif typed_input in 'dbscan_clustering':
-                    dbscan_clustering(diss_matrix, snp_list, matrix_file_path)
-                elif typed_input in 'affinity_propagation_clustering':
-                    af_prop_clustering(corr_matrix, snp_list, matrix_file_path)
-                elif typed_input in 'hdbscan_clustering':
-                    hdbscan_clustering(corr_matrix, snp_list, matrix_file_path)
-                elif typed_input in 'k_means_clustering':
-                    kmeans_clustering(corr_matrix, snp_list, matrix_file_path)
-                elif typed_input in 'k_medoids_clustering':
-                    kmedoids_clustering(corr_matrix, snp_list, matrix_file_path)
-                elif typed_input in 'spectral_clustering':
-                    spectral_clustering(corr_matrix, snp_list, matrix_file_path)
-                time_end = datetime.datetime.now()
-                print(f"\nTime of finish - {time_end.isoformat(sep=' ', timespec='seconds')}. Time of executing - {time_end - time_start}.")
-                break
+        result = 'NOT OK'
+        i = 0
+        typed_input = sys.argv[3].lower().replace('-', '_')
+        for met in methods:
+            if typed_input not in met:
+                i+=1                
+            elif typed_input == '':
+                i+=7         
+            else:
+                print(f"\n{met} algorithm will be used...")
+                time_start = datetime.datetime.now()
+                print (f"\nTime of start - {time_start.isoformat(sep=' ', timespec='seconds')}")    
+                try:
+                    with open (snp_file_path, 'r') as snp_file: 
+                        print('\nExtracting SNP list data from file...')
+                        snp_list = np.loadtxt(snp_file, dtype=str)
+                except FileNotFoundError:
+                    sys.exit('No such file.')
+                try:
+                    with open(matrix_file_path, 'r') as corr_file:
+                        print('Extracting matrix data from file...')
+                        corr = np.fromfile(corr_file, sep=' ')
+                except FileNotFoundError:
+                    sys.exit('No such file.')
+                print('Reshaping an array...')
+                corr_matrix = corr.reshape(len(snp_list), len(snp_list))
+                dissimilarity = 1 - abs(corr)
+                diss_matrix = dissimilarity.reshape(len(snp_list), len(snp_list))
+                diss_matrix_triangled = squareform(diss_matrix, force='tovector')
+                print(f"The SNP list for this chromosome is: \n{snp_list}")
+                print(f"With length of: {len(snp_list)}")
+                result = 'OK'
+        if i > 6:
+            sys.exit('Invalid method.')
+        if result == 'OK':
+            if typed_input in 'hierarchy_clustering':
+                hierarchy_clustering(diss_matrix_triangled, matrix_file_path)
+            elif typed_input in 'dbscan_clustering':
+                dbscan_clustering(diss_matrix, snp_list, matrix_file_path)
+            elif typed_input in 'affinity_propagation_clustering':
+                af_prop_clustering(corr_matrix, snp_list, matrix_file_path)
+            elif typed_input in 'hdbscan_clustering':
+                hdbscan_clustering(corr_matrix, snp_list, matrix_file_path)
+            elif typed_input in 'k_means_clustering':
+                kmeans_clustering(corr_matrix, snp_list, matrix_file_path)
+            elif typed_input in 'k_medoids_clustering':
+                kmedoids_clustering(corr_matrix, snp_list, matrix_file_path)
+            elif typed_input in 'spectral_clustering':
+                spectral_clustering(corr_matrix, snp_list, matrix_file_path)
+            time_end = datetime.datetime.now()
+            print(f"\nTime of finish - {time_end.isoformat(sep=' ', timespec='seconds')}. Time of executing - {time_end - time_start}.")
     except IndexError:
-        print('Invalid method.')
+        sys.exit('Invalid method.')
     return met, matrix_file_path
-awaiting_input()   
+awaiting_input()  
