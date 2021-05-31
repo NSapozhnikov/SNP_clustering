@@ -1,4 +1,4 @@
-##SNP_clustering v0.3 
+##SNP_clustering v0.4 
 
 ##29.05.2021
 
