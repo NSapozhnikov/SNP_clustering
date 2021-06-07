@@ -43,7 +43,7 @@ def dbscan_clustering(diss_matrix, snp_list, matrix_file_path):
     print('Estimated number of clusters: %d' % n_clusters_)
     print('Estimated number of noise points: %d' % n_noise_)
     out_file_path = matrix_file_path.rstrip('.ld')
-    with open(f"{out_file_path}.clustered", 'w') as fp:
+    with open(f"{out_file_path}_dbscan.clustered", 'w') as fp:
         for i in range(n_clusters_):
             cluster_indeces = np.where(labels == i)[0]
             # print(f"Cluster {i} has {len(cluster_indeces)} values:")
@@ -67,7 +67,7 @@ def af_prop_clustering(corr_matrix, snp_list, matrix_file_path):
     n_clusters_ = len(cluster_centers_indices)
     print('Estimated number of clusters: %d' % n_clusters_)
     out_file_path = matrix_file_path.rstrip('.ld')
-    with open(f"{out_file_path}.clustered", 'w') as fp:
+    with open(f"{out_file_path}_afprop.clustered", 'w') as fp:
         for i in range(n_clusters_):
             cluster_indeces = np.where(labels == i)[0]
             # print(f"Cluster {i} has {len(cluster_indeces)} values:")
@@ -98,7 +98,7 @@ def kmeans_clustering(corr_matrix, snp_list, matrix_file_path):
     n_clusters_ = len(set(labels))
     print('Estimated number of clusters: %d' % n_clusters_)
     out_file_path = matrix_file_path.rstrip('.ld')
-    with open(f"{out_file_path}.clustered", 'w') as fp:
+    with open(f"{out_file_path}_kmeans.clustered", 'w') as fp:
         for i in range(n_clusters_):
             cluster_indeces = np.where(labels == i)[0]
             # print(f"Cluster {i} has {len(cluster_indeces)} values:")
@@ -124,7 +124,7 @@ def kmedoids_clustering(corr_matrix, snp_list, matrix_file_path):
     n_clusters_ = len(set(labels))
     print('Estimated number of clusters: %d' % n_clusters_)
     out_file_path = matrix_file_path.rstrip('.ld')
-    with open(f"{out_file_path}.clustered", 'w') as fp:
+    with open(f"{out_file_path}_kmedoids.clustered", 'w') as fp:
         for i in range(n_clusters_):
             cluster_indeces = np.where(labels == i)[0]
             # print(f"Cluster {i} has {len(cluster_indeces)} values:")
@@ -144,7 +144,7 @@ def spectral_clustering(corr_matrix, snp_list, matrix_file_path):
     n_clusters_ = len(set(labels))
     print('Estimated number of clusters: %d' % n_clusters_)
     out_file_path = matrix_file_path.rstrip('.ld')
-    with open(f"{out_file_path}.clustered", 'w') as fp:
+    with open(f"{out_file_path}_spectral.clustered", 'w') as fp:
         for i in range(n_clusters_):
             cluster_indeces = np.where(labels == i)[0]
             # print(f"Cluster {i} has {len(cluster_indeces)} values:")
