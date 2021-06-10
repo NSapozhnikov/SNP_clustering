@@ -1,6 +1,6 @@
-##SNP_clustering v0.3 
+##SNP_clustering v0.5 
 
-##29.05.2021
+##10.06.2021
 
 #SNP_clustering
 
@@ -21,15 +21,21 @@
 
 ##Usage
 
-	Run the SNP_metadata_extractor.py script to create plink metadata. After all desired metadata is 
-	present run the snp_clustering.py script. You will be prompted for entering the chromosome number 
-	and clustering algorithm you wish to perform. The script computes files called like "chr1_snplist.snplist" 
+	Run the SNP_metadata_extractor.py script to create plink metadata.
+	The script computes files called like "chr1_snplist.snplist" 
 	and "chr1.ld". These files are created by SNP_metadata_extractor.py
+	After all desired metadata is present run the snp_clustering_v0.5.py script. 
+	Use the CLI to run the script with arguments:
+	argv[1] being matrix file path
+	argv[2] being snplist file path
+	argv[3] being one of implemented clustering methods (dbscan, hdbscan, k-means, 
+	k-medoids, spectral)
+	affinity propagation and hierarchy.linkage are under tweaking and are advised not being used.
 	
 ##Update
 
-	Added out file creation
-	Changed argument entry to bash
+	tweaked (dbscan, hdbscan, k-means, k-medoids, spectral) parameters
+	completed outfile creation in an optimised view
 
 ##WARNING
 
