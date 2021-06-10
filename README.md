@@ -22,8 +22,8 @@
 ##Usage
 
 	Run the SNP_metadata_extractor.py script to create plink metadata.
-	The script computes files called like "chr1_snplist.snplist" 
-	and "chr1.ld". These files are created by SNP_metadata_extractor.py
+	The script computes files called like "chr1_snplist.snplist" and "chr1.ld". These files are 
+	created by SNP_metadata_extractor.py
 	After all desired metadata is present run the snp_clustering_v0.5.py script. 
 	Use the CLI to run the script with arguments:
 	argv[1] being matrix file path
