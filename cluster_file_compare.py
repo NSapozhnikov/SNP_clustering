@@ -19,8 +19,8 @@ hdbscan_df = pd.read_table('chr1_hdbscan.clustered', sep=' ', header=None)
 spectral_df = pd.read_table('chr1_spectral.clustered', sep=' ', header=None)
 
 num_clust_kmeans = int(kmeans_df.max(numeric_only=True) + 1)
-num_clust_dbscan = int(dbscan_df.max(numeric_only=True) + 2)
-num_clust_hdbscan = int(hdbscan_df.max(numeric_only=True) + 2)
+num_clust_dbscan = int(dbscan_df.max(numeric_only=True) + 1)
+num_clust_hdbscan = int(hdbscan_df.max(numeric_only=True) + 1)
 num_clust_spectral = int(spectral_df.max(numeric_only=True) + 1)
 
 # method = input('File 1 to compare:')
@@ -30,15 +30,76 @@ num_clust_spectral = int(spectral_df.max(numeric_only=True) + 1)
 with open (snp_file_path, 'r') as snp_file: 
     snp_list = np.loadtxt(snp_file, dtype=str)
     
+def kmeans_spectral():
+    with open('kmeans_spectral.comparison', 'w') as out_file:
+        for i in range(num_clust_kmeans):
+            clu = kmeans_df.loc[kmeans_df[1] == i]#.reset_index(drop=True)
+            for j in range(num_clust_spectral):        
+                clu1 = spectral_df.loc[spectral_df[1] == j]#.reset_index(drop=True)
+                clu_merged = clu.merge(clu1, left_on=0, right_on=0, how='left')
+                if not clu_merged['1_y'].isnull().values.any():
+                    out_file.write(clu_merged.to_string())
+                    out_file.write('\n')
+                
+def kmeans_dbscan():                
+    with open('kmeans_dbscan.comparison', 'w') as out_file:
+        for i in range(num_clust_kmeans):
+            clu = kmeans_df.loc[kmeans_df[1] == i]#.reset_index(drop=True)
+            for j in range(-1, num_clust_dbscan):        
+                clu1 = dbscan_df.loc[dbscan_df[1] == j]#.reset_index(drop=True)
+                clu_merged = clu.merge(clu1, left_on=0, right_on=0, how='left')
+                if not clu_merged['1_y'].isnull().values.any():
+                    out_file.write(clu_merged.to_string())
+                    out_file.write('\n')
 
-with open('kmeans_spectral.comparison', 'w') as out_file:
-    for i in range(num_clust_kmeans):
-        clu = kmeans_df.loc[kmeans_df[1] == i]#.reset_index(drop=True)
-        for j in range(num_clust_spectral):        
-            clu1 = spectral_df.loc[spectral_df[1] == j]#.reset_index(drop=True)
-            clu_merged = clu.merge(clu1, left_on=0, right_on=0, how='left')
-            if not clu_merged['1_y'].isnull().values.any():
-                out_file.write(clu_merged.to_string())
-                out_file.write('\n')
+def kmeans_hdbscan():
+    with open('kmeans_hdbscan.comparison', 'w') as out_file:
+        for i in range(num_clust_kmeans):
+            clu = kmeans_df.loc[kmeans_df[1] == i]#.reset_index(drop=True)
+            for j in range(-1, num_clust_hdbscan):        
+                clu1 = hdbscan_df.loc[hdbscan_df[1] == j]#.reset_index(drop=True)
+                clu_merged = clu.merge(clu1, left_on=0, right_on=0, how='left')
+                if not clu_merged['1_y'].isnull().values.any():
+                    out_file.write(clu_merged.to_string())
+                    out_file.write('\n')
+                
+def hdbscan_spectral():                                              
+    with open('hdbscan_spectral.comparison', 'w') as out_file:
+        for i in range(-1, num_clust_hdbscan):
+            clu = hdbscan_df.loc[hdbscan_df[1] == i]#.reset_index(drop=True)
+            for j in range(num_clust_spectral):        
+                clu1 = spectral_df.loc[spectral_df[1] == j]#.reset_index(drop=True)
+                clu_merged = clu.merge(clu1, left_on=0, right_on=0, how='left')
+                if not clu_merged['1_y'].isnull().values.any():
+                    out_file.write(clu_merged.to_string())
+                    out_file.write('\n')
+
+def dbscan_hdbscan():                       
+    with open('dbscan_hdbscan.comparison', 'w') as out_file:
+        for i in range(-1, num_clust_dbscan):
+            clu = dbscan_df.loc[dbscan_df[1] == i]#.reset_index(drop=True)
+            for j in range(-1, num_clust_spectral):        
+                clu1 = hdbscan_df.loc[hdbscan_df[1] == j]#.reset_index(drop=True)
+                clu_merged = clu.merge(clu1, left_on=0, right_on=0, how='left')
+                if not clu_merged['1_y'].isnull().values.any():
+                    out_file.write(clu_merged.to_string())
+                    out_file.write('\n')
+
+def dbscan_spectral():                       
+    with open('dbscan_spectral.comparison', 'w') as out_file:
+        for i in range(-1, num_clust_dbscan):
+            clu = dbscan_df.loc[dbscan_df[1] == i]#.reset_index(drop=True)
+            for j in range(num_clust_spectral):        
+                clu1 = spectral_df.loc[spectral_df[1] == j]#.reset_index(drop=True)
+                clu_merged = clu.merge(clu1, left_on=0, right_on=0, how='left')
+                if not clu_merged['1_y'].isnull().values.any():
+                    out_file.write(clu_merged.to_string())
+                    out_file.write('\n')
+                    
+kmeans_dbscan()
+kmeans_hdbscan()
+kmeans_spectral()
+dbscan_hdbscan()
+dbscan_spectral()
+hdbscan_spectral()                    
                        
-
