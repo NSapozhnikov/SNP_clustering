@@ -28,8 +28,7 @@
 	Use the CLI to run the script with arguments:
 	argv[1] being matrix file path
 	argv[2] being snplist file path
-	argv[3] being one of implemented clustering methods (dbscan, hdbscan, k-means, 
-	spectral, all)
+	argv[3] being one of implemented clustering methods (dbscan, hdbscan, k-means, spectral, all)
 	k-medoids, affinity propagation and hierarchy.linkage are under tweaking and are not advised to use.
 	Then to compare clustering results of working algorithms use cluster_MySQL_compare.py. This script
 	will read data from DB (that has been created with the main clustering script in MySQL)
