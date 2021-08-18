@@ -33,10 +33,11 @@
 	Then to compare clustering results of working algorithms use cluster_MySQL_compare.py. This script
 	will read data from DB (that has been created with the main clustering script in MySQL)
 	and create files which are required as input for haplotype testing via Plink 1.07 
-	(newer version of plink does not support haplotype testing, see [plink documentation](https://www.cog-genomics.org/plink2)).
-	cluster_MySQL_compare.py script has 2 functions which can be used separately but it's recommended to run the
-	1st function (.hlist files creation) before 2nd (loop for executing plink command that computes .frq.hap files for all 
-	existing infiles in the same directory).
+	(newer version of plink does not support haplotype testing, see [plink documentation](http://google.com))
+	https://www.cog-genomics.org/plink2.
+	cluster_MySQL_compare.py script has 2 functions which can be used separately but it's 
+	recommended to run the 1st function (.hlist files creation) before 2nd (loop for executing 
+	plink command that computes .frq.hap files for all existing infiles in the same directory).
 
 	
 ##Update
