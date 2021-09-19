@@ -55,20 +55,19 @@ def preparing_infiles():
             for row in cursor:                                                 ### Reading all rows from  the table in DB to the list
                 clusters__list.append(row)
             print(f"{num_chr}/22...")
-            k = 0
-            fp = open(f"chr{num_chr}.hlist", 'w')
-            for j in range(len(clusters__list)):    
+            fp = open(f"chr{num_chr}.hlist", 'w')                              ### For the 1st element
+            for j in range(len(clusters__list)):                               ### Comparing values in columns of the same row (different clustering algorithms)
                 if j == 0:
                     meta_list = []        
                     meta_list.append(clusters__list[j][0])
                     if (clusters__list[j][1], clusters__list[j][2], clusters__list[j][3]) == (clusters__list[j-1][1], clusters__list[j-1][2], clusters__list[j-1][3]):
-                        meta_list.append(clusters__list[j][0])                 ### Comparing values in columns of the same row (different clustering algorithms)
-                    else:       
+                        meta_list.append(clusters__list[j][0])                 ### adding the 1st SNP
+                    else:                                                      
                         for i in range(len(meta_list)-1):                             
                             fp.write(f"** {num_chr}:")
                             snp = f"{pd_df.loc[pd_df['SNP'] == meta_list[0],'LOCATION'].item()}-{pd_df.loc[pd_df['SNP'] == meta_list[-1],'LOCATION'].item()}"
-                            fp.write(snp)
-                            for v in range(len(meta_list)):                                
+                            fp.write(snp)                                 
+                            for v in range(len(meta_list)):                    ### adding all other SNPs ** chr:startSNP-stopSNP rs...                 
                                 fp.write(' ')
                                 fp.write(meta_list[v])
                             fp.write('\n')
@@ -79,8 +78,7 @@ def preparing_infiles():
                     if (clusters__list[j][1], clusters__list[j][2], clusters__list[j][3]) == (clusters__list[j-1][1], clusters__list[j-1][2], clusters__list[j-1][3]):
                         meta_list.append(clusters__list[j][0])        
                     else:
-                        if len(meta_list) > 1:
-                            k+=1     
+                        if len(meta_list) > 1:                                 ### same for other elements  
                             for i in range(len(meta_list)-1):             
                                 fp.write(f"** {num_chr}:")
                                 snp = f"{pd_df.loc[pd_df['SNP'] == meta_list[0],'LOCATION'].item()}-{pd_df.loc[pd_df['SNP'] == meta_list[-1],'LOCATION'].item()}"
@@ -93,7 +91,6 @@ def preparing_infiles():
                             meta_list = []
                             meta_list.append(clusters__list[j][0])
             if len(meta_list) > 1:                
-                k+=1
                 for i in range(len(meta_list)-1):             
                     fp.write(f"** {num_chr}:")
                     snp = f"{pd_df.loc[pd_df['SNP'] == meta_list[0],'LOCATION'].item()}-{pd_df.loc[pd_df['SNP'] == meta_list[-1],'LOCATION'].item()}"
@@ -121,7 +118,7 @@ preparing_infiles()
 #             os.remove(f"chr{num_chr}.nosex")                                                          ###
 #         except FileNotFoundError:                                                                     ###
 #             i+=1                                                                                      ###                
-#         except FileExistsError:                                                                       ### Depricated
+#         except FileExistsError:                                                                       ### Depricated. Use assoc_hap.py
 #             j+=1                                                                                      ###    
 #         if i > 21:                                                                                    ###    
 #             print('No infiles.')                                                                      ###            
